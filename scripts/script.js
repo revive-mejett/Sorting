@@ -13,11 +13,8 @@ let listItemElementArray = []
 
 function setup() {
 
+    document.querySelector("#soundButton").addEventListener("click", playSound)
 
-    
-
-
- 
     let numberList = document.querySelector(".numbers")
 
     numberList.style.height = `${chartHeight}px`
@@ -35,10 +32,11 @@ function setup() {
         let newListItem = listItemBlueprint.cloneNode()
         newListItem.setAttribute("id", `n${i}`)
         newListItem.textContent = i
-        newListItem.style.width = `${(allowableItemMaxWidth) / size}px`
+        newListItem.style.width = `${Math.floor((allowableItemMaxWidth) / size)}px`
         newListItem.style.height =  `${(i+1)/(size+1) * allowableItemMaxHeight}px`
         listItemElementArray[i] = newListItem
         listItemElementArray[i].style.backgroundColor = `hsl(${i / size * 360}, 100%, 50%)`
+        // listItemElementArray[i].style.backgroundColor = `hsl(250, 100%, ${(i+1) / (size+1) * 100}%)`
 
 
     }
@@ -49,46 +47,15 @@ function setup() {
 
     console.log(checkIfSorted())
 
-    // setTimeout(() => {
-    //     bogoSort()
-    // }, 5000);
+    setTimeout(() => {
+        bogoSort()
+    }, 2000);
 
-    bogoSort()
+    
 
 
 }
 
-
-function randItemNumber() {
-    let randomId = Math.floor(Math.random()*size)
-    return randomId
-}
-
-function clearChart() {
-    const numberList = document.querySelector(".numbers")
-    numberList.textContent = undefined
-}
-
-function appendItemsToChart() {
-    const numberList = document.querySelector(".numbers")
-
-    for (let i = 0; i < listItemElementArray.length; i++) {
-        numberList.appendChild(listItemElementArray[i])
-    }
-}
-
-function updateChart() {
-    clearChart()
-    appendItemsToChart()
-}
-
-function shuffleChart() {
-    console.log("shuffle chart!")
-    for (let i = 0; i < listItemElementArray.length; i++) {
-        swapValues(randItemNumber(), randItemNumber())
-    }
-    updateChart()
-}
 
 
 function swapValues(pos1, pos2) {
@@ -126,7 +93,6 @@ function toNum(str) {
 function selectionSort() {
 
     console.log("selection sort!")
-    
 
     for (let i = 0; i < listItemElementArray.length - 1; i++) {
         let lowestIndex = i
@@ -158,6 +124,7 @@ function bogoSort() {
     let shuffleDelay = setInterval(() => {
         shuffleChart()
         updateChart()
+        playSound()
         if (checkIfSorted()) {
             clearInterval(shuffleDelay)
             console.log("sorted! with bogosort")
@@ -177,4 +144,47 @@ function printNumbers() {
     for (let i of listItemElementArray) {
         console.log(toNum(i.getAttribute("id")))
     }
+}
+
+
+
+//chart manipulation
+
+
+function randItemNumber() {
+    let randomId = Math.floor(Math.random()*size)
+    return randomId
+}
+
+function clearChart() {
+    const numberList = document.querySelector(".numbers")
+    numberList.textContent = undefined
+}
+
+function appendItemsToChart() {
+    const numberList = document.querySelector(".numbers")
+
+    for (let i = 0; i < listItemElementArray.length; i++) {
+        numberList.appendChild(listItemElementArray[i])
+    }
+}
+
+function updateChart() {
+    clearChart()
+    appendItemsToChart()
+}
+
+function shuffleChart() {
+    console.log("shuffle chart!")
+    for (let i = 0; i < listItemElementArray.length; i++) {
+        swapValues(randItemNumber(), randItemNumber())
+    }
+    updateChart()
+}
+
+
+//audio
+function playSound() {
+    let audio = new Audio("audio/compBlip.mp3")
+    audio.play()
 }
