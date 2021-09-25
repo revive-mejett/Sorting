@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", setup)
 
 
 //chart characteristics constants
-const chartHeight = 600
+const chartHeight = 700
 const chartWidth = 1200
-const size = 15;
+const size = 100;
 let listItemElementArray = []
 
 function setup() {
@@ -84,7 +84,7 @@ function updateChart(listItemElementArray) {
 
 function shuffleChart(itemArray) {
     console.log("shuffle chart!")
-    for (let i = 0; i < itemArray.length; i++) {
+    for (let i = 0; i < itemArray.length*2; i++) {
         swapValues(itemArray, randItemNumber(), randItemNumber())
     }
     updateChart(itemArray)
