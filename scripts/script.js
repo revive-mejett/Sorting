@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", setup)
 //chart characteristics constants
 const chartHeight = 700
 const chartWidth = 1200
-const size = 10;
+const size = 50;
 let listItemElementArray = []
 
 function setup() {
@@ -36,15 +36,17 @@ function setup() {
         newListItem.setAttribute("id", `n${i}`)
         newListItem.textContent = i
         newListItem.style.width = `${(allowableItemMaxWidth) / size}px`
-        newListItem.style.height =  `${(i+1)/(size+1) * allowableItemMaxHeight}px`;
+        newListItem.style.height =  `${(i+1)/(size+1) * allowableItemMaxHeight}px`
         listItemElementArray[i] = newListItem
-        // numberList.appendChild(newListItem)
+        listItemElementArray[i].style.backgroundColor = `hsl(${i / size * 360}, 100%, 50%)`
+
 
     }
 
 
     appendItemsToChart()
-    shuffleChart()
+    // shuffleChart()
+    console.log(checkIfSorted())
 
 
     
@@ -89,4 +91,27 @@ function swapValues(pos1, pos2) {
     let temp = listItemElementArray[pos1]
     listItemElementArray[pos1] = listItemElementArray[pos2]
     listItemElementArray[pos2] = temp
+}
+
+
+
+function checkIfSorted() {
+
+
+    for (let i = 0; i < listItemElementArray.length - 1; i++) {
+        let leftNumber = toNum(listItemElementArray[i].getAttribute("id"))
+        let rightNumber = toNum(listItemElementArray[i+1].getAttribute("id"))
+
+        if (rightNumber < leftNumber) {
+            return false
+        }
+
+    }
+
+    return true
+    
+}
+
+function toNum(str) {
+    return str.replace("n", "")
 }
