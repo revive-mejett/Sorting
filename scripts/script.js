@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", setup)
 //chart characteristics constants
 const chartHeight = 700
 const chartWidth = 1200
-const size = 100;
+const size = 10;
 let listItemElementArray = []
 
 function setup() {
@@ -43,17 +43,11 @@ function setup() {
     }
 
 
-    appendItemsToChart(listItemElementArray)
-    shuffleChart(listItemElementArray)
+    appendItemsToChart()
+    shuffleChart()
 
 
     
-
-}
-
-function getValuesInChart() {
-    const numberList = document.querySelector(".numbers")
-    let allItems = numberList.querySelectorAll(".array-flex-item")
 
 }
 
@@ -68,31 +62,31 @@ function clearChart() {
     numberList.textContent = undefined
 }
 
-function appendItemsToChart(itemArray) {
+function appendItemsToChart() {
     const numberList = document.querySelector(".numbers")
     console.log("trying to append items!")
 
-    for (let i = 0; i < itemArray.length; i++) {
-        numberList.appendChild(itemArray[i])
+    for (let i = 0; i < listItemElementArray.length; i++) {
+        numberList.appendChild(listItemElementArray[i])
     }
 }
 
-function updateChart(listItemElementArray) {
+function updateChart() {
     clearChart()
-    appendItemsToChart(listItemElementArray)
+    appendItemsToChart()
 }
 
-function shuffleChart(itemArray) {
+function shuffleChart() {
     console.log("shuffle chart!")
-    for (let i = 0; i < itemArray.length*2; i++) {
-        swapValues(itemArray, randItemNumber(), randItemNumber())
+    for (let i = 0; i < listItemElementArray.length*2; i++) {
+        swapValues(randItemNumber(), randItemNumber())
     }
-    updateChart(itemArray)
+    updateChart()
 }
 
 
-function swapValues(itemArray, pos1, pos2) {
-    let temp = itemArray[pos1]
-    itemArray[pos1] = itemArray[pos2]
-    itemArray[pos2] = temp
+function swapValues(pos1, pos2) {
+    let temp = listItemElementArray[pos1]
+    listItemElementArray[pos1] = listItemElementArray[pos2]
+    listItemElementArray[pos2] = temp
 }
