@@ -49,17 +49,12 @@ function setup() {
 
     console.log(checkIfSorted())
 
-    setTimeout(() => {
-        bogoSort()
-        printNumbers()
-    }, 5000);
+    // setTimeout(() => {
+    //     bogoSort()
+    // }, 5000);
 
-    
-    // for (let i = 0; i < 10; i++) {
-    //     setTimeout(() => {
-    //         console.log(i)
-    //     }, 500*i);
-    // }
+    bogoSort()
+
 
 }
 
@@ -76,7 +71,6 @@ function clearChart() {
 
 function appendItemsToChart() {
     const numberList = document.querySelector(".numbers")
-    console.log("trying to append items!")
 
     for (let i = 0; i < listItemElementArray.length; i++) {
         numberList.appendChild(listItemElementArray[i])
@@ -90,7 +84,7 @@ function updateChart() {
 
 function shuffleChart() {
     console.log("shuffle chart!")
-    for (let i = 0; i < listItemElementArray.length*2; i++) {
+    for (let i = 0; i < listItemElementArray.length; i++) {
         swapValues(randItemNumber(), randItemNumber())
     }
     updateChart()
@@ -158,27 +152,19 @@ function selectionSort() {
 function bogoSort() {
 
     console.log("bogo sort!")
-    let delay = 1;
-
-
-    for (let i = 0; i < 1000; i++) {
-
-        delay++
-        console.log(checkIfSorted())
-
-        if (!checkIfSorted()) {
-
-            setTimeout(() => {
-                shuffleChart()
-                updateChart()
-            }, 200*delay)
-
-        } else {
-            break
-        }
-        
     
-    }
+
+
+    let shuffleDelay = setInterval(() => {
+        shuffleChart()
+        updateChart()
+        if (checkIfSorted()) {
+            clearInterval(shuffleDelay)
+            console.log("sorted! with bogosort")
+        }
+    }, 50)
+
+    
 
 }
 
