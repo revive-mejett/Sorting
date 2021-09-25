@@ -9,23 +9,22 @@ document.addEventListener("DOMContentLoaded", setup)
 const chartHeight = 600
 const chartWidth = 1200
 const size = 15;
+let listItemElementArray = []
 
 function setup() {
 
 
     
-    let numbers = [1,2,3,4,5,6,7,8,9]
+
 
  
     let numberList = document.querySelector(".numbers")
-    console.log(numberList)
 
     numberList.style.height = `${chartHeight}px`
     numberList.style.width = `${chartWidth}px`
 
     let listItemBlueprint = document.createElement("li")
     listItemBlueprint.setAttribute("class", "array-flex-item")
-
 
     
 
@@ -34,22 +33,21 @@ function setup() {
         const allowableItemMaxHeight = chartHeight * 0.9
         const allowableItemMaxWidth = chartWidth*0.9
         let newListItem = listItemBlueprint.cloneNode()
-        numberList.appendChild(newListItem)
         newListItem.setAttribute("id", `n${i}`)
         newListItem.textContent = i
-        console.log(newListItem.getAttribute("id"))
         newListItem.style.width = `${(allowableItemMaxWidth) / size}px`
         newListItem.style.height =  `${(i+1)/(size+1) * allowableItemMaxHeight}px`;
+        listItemElementArray[i] = newListItem
+        // numberList.appendChild(newListItem)
+
     }
 
-    // for (let i = 0; i < numbers.length; i++) {
-    //     console.log(numbers[i])
-    // }
-    getValuesInChart()
 
-    setTimeout(() => {
-        
-    }, timeout);
+    appendItemsToChart(listItemElementArray)
+    shuffleChart(listItemElementArray)
+
+
+    
 
 }
 
@@ -57,11 +55,44 @@ function getValuesInChart() {
     const numberList = document.querySelector(".numbers")
     let allItems = numberList.querySelectorAll(".array-flex-item")
 
-
-    console.log(randItemNumber())
 }
+
 
 function randItemNumber() {
     let randomId = Math.floor(Math.random()*size)
     return randomId
+}
+
+function clearChart() {
+    const numberList = document.querySelector(".numbers")
+    numberList.textContent = undefined
+}
+
+function appendItemsToChart(itemArray) {
+    const numberList = document.querySelector(".numbers")
+    console.log("trying to append items!")
+
+    for (let i = 0; i < itemArray.length; i++) {
+        numberList.appendChild(itemArray[i])
+    }
+}
+
+function updateChart(listItemElementArray) {
+    clearChart()
+    appendItemsToChart(listItemElementArray)
+}
+
+function shuffleChart(itemArray) {
+    console.log("shuffle chart!")
+    for (let i = 0; i < itemArray.length; i++) {
+        swapValues(itemArray, randItemNumber(), randItemNumber())
+    }
+    updateChart(itemArray)
+}
+
+
+function swapValues(itemArray, pos1, pos2) {
+    let temp = itemArray[pos1]
+    itemArray[pos1] = itemArray[pos2]
+    itemArray[pos2] = temp
 }
