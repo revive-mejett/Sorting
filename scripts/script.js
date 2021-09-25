@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", setup)
 //chart characteristics constants
 const chartHeight = 700
 const chartWidth = 1200
-const size = 20;
+const size = 5;
 let listItemElementArray = []
 
 function setup() {
@@ -50,7 +50,7 @@ function setup() {
     console.log(checkIfSorted())
 
     setTimeout(() => {
-        selectionSort()
+        bogoSort()
         printNumbers()
     }, 5000);
 
@@ -155,7 +155,32 @@ function selectionSort() {
 }
 
 
+function bogoSort() {
 
+    console.log("bogo sort!")
+    let delay = 1;
+
+
+    for (let i = 0; i < 1000; i++) {
+
+        delay++
+        console.log(checkIfSorted())
+
+        if (!checkIfSorted()) {
+
+            setTimeout(() => {
+                shuffleChart()
+                updateChart()
+            }, 200*delay)
+
+        } else {
+            break
+        }
+        
+    
+    }
+
+}
 
 
 
